@@ -1,0 +1,5 @@
+NOTA IMPORTANTE
+I QR code qui sotto sono predisposti con un indirizzo segnaposto:
+https://TUO-DOMINIO.example/viaggio-in-puglia/citta/
+
+Prima di stamparli, sostituire TUO-DOMINIO.example con l'indirizzo web reale dove verrà pubblicata la cartella.
