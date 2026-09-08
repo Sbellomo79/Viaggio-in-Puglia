@@ -82,7 +82,6 @@ def wikimedia_image(city: str):
     r.raise_for_status()
     data = r.json()
     pages = list((data.get("query") or {}).get("pages", {}).values())
-    # Prefer landscape photos with normal file extensions.
     pages.sort(key=lambda p: 0 if str(p.get("title", "")).lower().endswith((".jpg", ".jpeg", ".png")) else 1)
     for p in pages:
         info = (p.get("imageinfo") or [{}])[0]
@@ -143,7 +142,6 @@ def fallback_background(city: str):
         d.ellipse([380,305,480,405], outline="#f1e8d6", width=12)
         d.rectangle([60,575,1010,615], fill="#a58b6d")
     else:
-        # generic Puglian stone town with sea/land bands
         for i in range(9):
             x=60+i*120
             h=90+(i%4)*26
@@ -159,7 +157,10 @@ def make_qr(data: str):
 
 
 def make_card(city_slug: str, city_name: str):
-    bg, credit = wikimedia_image(city_slug)
+    try:
+        bg, credit = wikimedia_image(city_slug)
+    except Exception:
+        bg, credit = None, None
     if bg is None:
         bg, credit = fallback_background(city_slug)
     bg = ImageOps.fit(bg, (1200, 900), method=Image.Resampling.LANCZOS, centering=(0.5, 0.5))
@@ -167,11 +168,8 @@ def make_card(city_slug: str, city_name: str):
     overlay = Image.new("RGBA", bg.size, (255, 251, 241, 48))
     bg = Image.alpha_composite(bg.convert("RGBA"), overlay).convert("RGB")
     d = ImageDraw.Draw(bg, "RGBA")
-
-    # Whitewash under the content to echo the wedding stationery style.
     d.rounded_rectangle([250, 115, 950, 805], radius=42, fill=(255,253,248,246), outline=(184,155,98,210), width=4)
     text_center(d, (600, 190), city_name.upper(), font(54), (78, 96, 80, 255))
-
     qr = make_qr(f"{BASE_URL}/{city_slug}.html")
     qr = qr.resize((430, 430), Image.Resampling.NEAREST)
     bg.paste(qr, (385, 260))
@@ -180,20 +178,18 @@ def make_card(city_slug: str, city_name: str):
     return bg, credit
 
 
-def update_html(city_slug: str):
+def update_html(city_slug: str, city_name: str):
     path = ROOT / f"{city_slug}.html"
     if not path.exists():
         return False
     text = path.read_text(encoding="utf-8")
     text = text.replace('href="../index.html"', f'href="{BASE_URL}/index.html"')
-    # Make sure every city page uses the shared theme.
     if 'href="style.css"' not in text:
         text = text.replace('</head>', '<link rel="stylesheet" href="style.css"></head>', 1)
-    # Add a QR card if the page does not already show its QR asset.
     qr_asset = f'qr-{city_slug}.png'
     if qr_asset not in text:
         block = (f'<div class="card qr-card" style="grid-column:1/-1;text-align:center;">'
-                 f'<h2>Scopri {city_slug.replace("-", " ").title()}</h2>'
+                 f'<h2>Scopri {city_name}</h2>'
                  f'<img src="{qr_asset}" alt="QR code {city_name}" style="width:300px;height:300px;">'
                  f'</div>')
         text = text.replace('</div><div class="quote">', block + '</div><div class="quote">', 1)
@@ -215,7 +211,7 @@ for slug, name in CITIES.items():
         credits.append(f"{name}: {credit['title']} — {credit['author']} — {credit['license']} — {credit['source']}")
     else:
         credits.append(f"{name}: original illustrated fallback background generated locally (no external image source).")
-    update_html(slug)
+    update_html(slug, name)
 
 (ROOT / "IMAGE-CREDITS.txt").write_text("\n".join(credits) + "\n", encoding="utf-8")
 print(f"Generated {len(CITIES)} QR cards and updated navigation.")
