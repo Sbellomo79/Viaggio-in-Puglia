@@ -1,0 +1,18 @@
+QR code cards generated automatically for Viaggio in Puglia.
+Target format: one QR per city page, with a white quiet zone and a city-themed background.
+
+Bari: original illustrated fallback background generated locally (no external image source).
+Gallipoli: original illustrated fallback background generated locally (no external image source).
+Altamura: original illustrated fallback background generated locally (no external image source).
+Ostuni: original illustrated fallback background generated locally (no external image source).
+Locorotondo: original illustrated fallback background generated locally (no external image source).
+Martina Franca: original illustrated fallback background generated locally (no external image source).
+Monopoli: original illustrated fallback background generated locally (no external image source).
+Polignano a Mare: original illustrated fallback background generated locally (no external image source).
+Grottaglie: original illustrated fallback background generated locally (no external image source).
+Alberobello: original illustrated fallback background generated locally (no external image source).
+Otranto: original illustrated fallback background generated locally (no external image source).
+Trani: original illustrated fallback background generated locally (no external image source).
+Vieste: original illustrated fallback background generated locally (no external image source).
+Taranto: original illustrated fallback background generated locally (no external image source).
+Modugno: original illustrated fallback background generated locally (no external image source).
