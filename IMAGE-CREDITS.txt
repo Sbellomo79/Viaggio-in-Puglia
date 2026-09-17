@@ -2,7 +2,7 @@ QR code cards generated automatically for Viaggio in Puglia.
 Target format: one QR per city page, with a white quiet zone and a city-themed background.
 
 Bari: original illustrated fallback background generated locally (no external image source).
-Gallipoli: File:Puglia, Italy ESA24094891.jpeg — European Space Agency — Attribution — https://commons.wikimedia.org/wiki/File%3APuglia%2C_Italy_ESA24094891.jpeg
+Gallipoli: original illustrated fallback background generated locally (no external image source).
 Altamura: original illustrated fallback background generated locally (no external image source).
 Ostuni: original illustrated fallback background generated locally (no external image source).
 Locorotondo: original illustrated fallback background generated locally (no external image source).
